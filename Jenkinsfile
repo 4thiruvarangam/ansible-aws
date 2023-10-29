@@ -5,7 +5,7 @@ pipeline {
 		stage("build") {
 			steps {
 			sh '''#!/bin/bash
-   			echo hi.sh'''
+   			ansible-playbook "${WORKSPACE}/main.yml'''
 			
 			}
 			
