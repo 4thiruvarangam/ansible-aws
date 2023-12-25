@@ -1,0 +1,20 @@
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "DenyS3accessforothers",
+            "Effect": "Deny",
+            "NotPrincipal": {
+                "AWS": [
+                    "arn:aws:iam::353886752529:user/user1",
+                    "arn:aws:iam::353886752529:user/cloud_user"
+                ]
+            },
+            "Action": "s3:*",
+            "Resource": [
+                "arn:aws:s3:::test122423v2",
+                "arn:aws:s3:::test122423v2/*"
+            ]
+        }
+    ]
+}
