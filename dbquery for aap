@@ -1,0 +1,114 @@
+Query to pull templates and projects with run timeanddate
+//
+
+SELECT 
+    p.unifiedjobtemplate_ptr_id AS project_id, 
+    ujt_project.name AS project_name, 
+    org.name AS organization_name, 
+    jt.unifiedjobtemplate_ptr_id AS job_template_id, 
+    ujt_template.name AS job_template_name,
+    MAX(uj.finished) AS last_run_time
+FROM 
+    main_project p
+JOIN 
+    main_unifiedjobtemplate ujt_project ON p.unifiedjobtemplate_ptr_id = ujt_project.id
+JOIN 
+    main_organization org ON ujt_project.organization_id = org.id
+JOIN 
+    main_jobtemplate jt ON jt.project_id = p.unifiedjobtemplate_ptr_id
+JOIN 
+    main_unifiedjobtemplate ujt_template ON jt.unifiedjobtemplate_ptr_id = ujt_template.id
+LEFT JOIN 
+    main_job j ON j.job_template_id = jt.unifiedjobtemplate_ptr_id
+LEFT JOIN 
+    main_unifiedjob uj ON j.unifiedjob_ptr_id = uj.id  -- LEFT JOIN to ensure we include all templates
+GROUP BY 
+    p.unifiedjobtemplate_ptr_id, 
+    ujt_project.name, 
+    org.name, 
+    jt.unifiedjobtemplate_ptr_id, 
+    ujt_template.name
+ORDER BY 
+    org.name, ujt_project.name, ujt_template.name;
+//
+SELECT 
+    p.unifiedjobtemplate_ptr_id AS project_id, 
+    ujt_project.name AS project_name, 
+    org.name AS organization_name, 
+    jt.unifiedjobtemplate_ptr_id AS job_template_id, 
+    ujt_template.name AS job_template_name
+FROM 
+    main_project p
+JOIN 
+    main_unifiedjobtemplate ujt_project ON p.unifiedjobtemplate_ptr_id = ujt_project.id
+JOIN 
+    main_organization org ON ujt_project.organization_id = org.id
+JOIN 
+    main_jobtemplate jt ON jt.project_id = p.unifiedjobtemplate_ptr_id
+JOIN 
+    main_unifiedjobtemplate ujt_template ON jt.unifiedjobtemplate_ptr_id = ujt_template.id
+ORDER BY 
+    org.name, ujt_project.name, ujt_template.name;
+//
+SELECT 
+    p.unifiedjobtemplate_ptr_id AS project_id, 
+    ujt_project.name AS project_name, 
+    org.name AS organization_name, 
+    jt.unifiedjobtemplate_ptr_id AS job_template_id, 
+    ujt_template.name AS job_template_name,
+    MAX(uj.finished) AS last_run_time
+FROM 
+    main_project p
+JOIN 
+    main_unifiedjobtemplate ujt_project ON p.unifiedjobtemplate_ptr_id = ujt_project.id
+JOIN 
+    main_organization org ON ujt_project.organization_id = org.id
+JOIN 
+    main_jobtemplate jt ON jt.project_id = p.unifiedjobtemplate_ptr_id
+JOIN 
+    main_unifiedjobtemplate ujt_template ON jt.unifiedjobtemplate_ptr_id = ujt_template.id
+JOIN 
+    main_job j ON j.job_template_id = jt.unifiedjobtemplate_ptr_id
+JOIN 
+    main_unifiedjob uj ON j.unifiedjob_ptr_id = uj.id  -- Joining with unifiedjob to get timestamps
+GROUP BY 
+    p.unifiedjobtemplate_ptr_id, 
+    ujt_project.name, 
+    org.name, 
+    jt.unifiedjobtemplate_ptr_id, 
+    ujt_template.name
+ORDER BY 
+    org.name, ujt_project.name, ujt_template.name;
+
+
+//
+
+SELECT 
+    p.unifiedjobtemplate_ptr_id AS project_id, 
+    ujt_project.name AS project_name, 
+    org.name AS organization_name, 
+    jt.unifiedjobtemplate_ptr_id AS job_template_id, 
+    ujt_template.name AS job_template_name,
+    MAX(uj.finished) AS last_run_time
+FROM 
+    main_project p
+JOIN 
+    main_unifiedjobtemplate ujt_project ON p.unifiedjobtemplate_ptr_id = ujt_project.id
+JOIN 
+    main_organization org ON ujt_project.organization_id = org.id
+JOIN 
+    main_jobtemplate jt ON jt.project_id = p.unifiedjobtemplate_ptr_id
+JOIN 
+    main_unifiedjobtemplate ujt_template ON jt.unifiedjobtemplate_ptr_id = ujt_template.id
+LEFT JOIN 
+    main_job j ON j.job_template_id = jt.unifiedjobtemplate_ptr_id
+LEFT JOIN 
+    main_unifiedjob uj ON j.unifiedjob_ptr_id = uj.id  -- LEFT JOIN to ensure we include all templates
+GROUP BY 
+    p.unifiedjobtemplate_ptr_id, 
+    ujt_project.name, 
+    org.name, 
+    jt.unifiedjobtemplate_ptr_id, 
+    ujt_template.name
+ORDER BY 
+    org.name, ujt_project.name, ujt_template.name;
